@@ -8,44 +8,44 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import for go back button icon
+import Card from '../components/Card'; // Import your Card component
 
-const CustomerScreen = () => {
+const CustomerScreen = ({ navigation }) => {
   const backgroundImage = require('../assets/images/backgroundImg.png');
-  const cameraIcon = require('../assets/images/cameraIcon.png'); // Replace with your card icon
-  const galleryIcon = require('../assets/images/galleryIcon.png'); // Replace with your card icon
+  const cameraIcon = require('../assets/images/cameraIcon.png');
+  const galleryIcon = require('../assets/images/galleryIcon.png');
+
+  const cardOptions = [
+    { title: 'Use Camera To Scan', icon: cameraIcon, onPress: () => navigation.navigate('CustomerScan') },
+    { title: 'Choose from Gallery', icon: galleryIcon, onPress: () => navigation.navigate('PartnerScan') },
+  ];
 
   return (
     <View style={styles.container}>
-       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+
         {/* Card container with vertical centering and spacing */}
         <View style={styles.cardsContainer}>
-          {/* Customer Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('CustomerScan')}>
-            <View style={styles.card}>
-              <Image source={cameraIcon} style={styles.cardIcon} />
-              <Text style={styles.cardText}>Use Camera To Scan</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* Partner Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('PartnerScan')}>
-            <View style={styles.card}>
-              <Image source={galleryIcon} style={styles.cardIcon} />
-              <Text style={styles.cardText}>Choose from Gallery</Text>
-            </View>
-          </TouchableOpacity>
+          {cardOptions.map((option, index) => (
+            <Card
+              key={index}
+              title={option.title}
+              icon={<Image source={option.icon} style={styles.cardIcon} />} // Render icon image
+              onPress={option.onPress}
+            />
+          ))}
         </View>
+
+        {/* Navigation bar placeholder */}
+        <View style={styles.navBar}>
+          <Text style={styles.navBarText}>Navigation Bar</Text>
+        </View>
+
+        {/* Go back button */}
+        <TouchableOpacity style={styles.goBackButton}>
+          <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+        </TouchableOpacity>
       </ImageBackground>
-
-      {/* Navigation bar placeholder */}
-      <View style={styles.navBar}>
-        <Text style={styles.navBarText}>Navigation Bar</Text>
-      </View>
-
-      {/* Go back button */}
-      <TouchableOpacity style={styles.goBackButton}>
-        <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -58,27 +58,10 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
-  centeredCard: {
-    flex: 1, // Makes it take up the remaining space
-    justifyContent: 'center', // Centers card vertically
+  cardsContainer: {
+    flex: 1, // Makes cards take up remaining space
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  card: {
-    backgroundColor: '#B3E5FC', // White background for card
-    borderRadius: 10,
-    padding: 30,
-    alignItems: 'center',
-    justifyContent: 'space-between', // Space between icon and text
-    height: 200, // Adjust card height as needed
-  },
-  cardIcon: {
-    width: 100,
-    height: 100, // Adjust icon size as needed
-    resizeMode: 'contain',
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   navBar: {
     position: 'absolute',
@@ -97,6 +80,12 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
   },
+  cardIcon: {
+    width: 30,
+    height: 30, // Adjust icon size as needed
+    resizeMode: 'contain', // Maintain aspect ratio
+  },
+  // ...ther styles (refer to previous code for remaining styles)
 });
 
 export default CustomerScreen;

@@ -16,7 +16,7 @@ const CardContainer = ({ title, image, onPress, iconContainerImage }) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    backgroundColor: '#fff', // Set white background for card content
+    backgroundColor: '#B3E5FC', // Set white background for card content
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',

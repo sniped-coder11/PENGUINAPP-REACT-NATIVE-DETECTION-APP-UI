@@ -12,7 +12,7 @@ import CardContainer from '../components/Card-Container'; // Import CardContaine
 const PartnerScreen = ({ navigation }) => {
     const backgroundImage = require('../assets/images/backgroundImg.png');
     const cameraIcon = require('../assets/images/cameraIcon.png'); // Replace with your card icon
-    const iconContainerImage = require('../assets/images/icon-container.png'); // Replace with your icon container image path
+    const iconContainerImage = require('../assets/images/icon-container.png'); 
   
     return (
       <View style={styles.container}>
