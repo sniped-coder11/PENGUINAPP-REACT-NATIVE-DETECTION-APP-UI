@@ -2,90 +2,71 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  Text,
   Image,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import for go back button icon
+import CardContainer from '../components/Card-Container'; // Import CardContainer
 
-const PartnerScreen = () => {
-  const backgroundImage = require('../assets/images/backgroundImg.png');
-  const cameraIcon = require('../assets/images/cameraIcon.png'); // Replace with your card icon
-
-  return (
-    <View style={styles.container}>
-      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        {/* Card container with vertical centering */}
-        <View style={styles.centeredCard}>
-          {/* Card with icon and text */}
-          <View style={styles.card}>
-            <Image source={cameraIcon} style={styles.cardIcon} />
-            <Text style={styles.cardText}>Use Camera To Scan</Text>
+const PartnerScreen = ({ navigation }) => {
+    const backgroundImage = require('../assets/images/backgroundImg.png');
+    const cameraIcon = require('../assets/images/cameraIcon.png'); // Replace with your card icon
+    const iconContainerImage = require('../assets/images/icon-container.png'); // Replace with your icon container image path
+  
+    return (
+      <View style={styles.container}>
+        <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+          {/* Card container with vertical centering */}
+          <View style={styles.centeredCard}>
+            {/* Partner Card with icon container */}
+            <CardContainer
+              title="Use Camera To Scan"
+              image={cameraIcon}
+              onPress={() => navigation.navigate('ScannerScreen')}
+            >
+              {/* Place cameraIcon within CardContainer (optional) */}
+              <Image source={cameraIcon} style={styles.cardIcon} />
+            </CardContainer>
           </View>
-        </View>
-      </ImageBackground>
-
-      {/* Navigation bar placeholder */}
-      <View style={styles.navBar}>
-        <Text style={styles.navBarText}>Navigation Bar</Text>
+        </ImageBackground>
+  
+        {/* Go back button in top right corner */}
+        <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
+          <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+        </TouchableOpacity>
       </View>
-
-      {/* Go back button */}
-      <TouchableOpacity style={styles.goBackButton}>
-        <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  backgroundImage: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
-  centeredCard: {
-    flex: 1, // Makes it take up the remaining space
-    justifyContent: 'center', // Centers card vertically
-    alignItems: 'center',
-  },
-  card: {
-    backgroundColor: '#B3E5FC', // White background for card
-    borderRadius: 10,
-    padding: 30,
-    alignItems: 'center',
-    justifyContent: 'space-between', // Space between icon and text
-    height: 200, // Adjust card height as needed
-  },
-  cardIcon: {
-    width: 100,
-    height: 100, // Adjust icon size as needed
-    resizeMode: 'contain',
-  },
-  cardText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  navBar: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    backgroundColor: '#F0F0F0',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-  },
-  navBarText: {
-    fontSize: 16,
-  },
-  goBackButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-  },
-});
-
-export default PartnerScreen;
+    );
+  };
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    backgroundImage: {
+      flex: 1,
+      resizeMode: 'cover',
+    },
+    centeredCard: {
+      flex: 1, // Makes it take up the remaining space
+      justifyContent: 'center', // Centers card vertically
+      alignItems: 'center',
+    },
+    cardIcon: {
+      // Adjust position and size based on your icon container image
+      position: 'absolute',
+      top: 20, // Adjust vertical position
+      left: 20, // Adjust horizontal position
+      width: 60, // Adjust width
+      height: 60, // Adjust height
+      resizeMode: 'contain',
+    },
+    goBackButton: {
+      position: 'absolute',
+      top: 10,
+      right: 10,
+      padding: 10, // Add padding for better touch area
+    },
+  });
+  
+  export default PartnerScreen;
