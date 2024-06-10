@@ -1,31 +1,46 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
 
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const partnerImage = require('../assets/images/partnerImg.png');
   const customerImage = require('../assets/images/customerImg.png');
+  const backgroundImage = require('../assets/images/backgroundImg.png');
+  const tabBarData = [ // Sample tab bar data
+    { name: 'Partner', image: partnerImage },
+    { name: 'Customer', image: customerImage },
+  ];
 
   return (
     <View style={styles.container}>
-      {/* Cards container */}
-      <View style={styles.cardsContainer}>
-        {/* Partner Card */}
-        <View style={styles.card}>
-          <Image source={partnerImage} style={styles.cardIcon} />
-          <Text style={styles.cardText}>Partner</Text>
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+        <View style={styles.colorOverlay} />
+
+        {/* Cards container with vertical centering */}
+        <View style={[styles.cardsContainer, { justifyContent: 'center' }]}>
+          {/* Partner Card */}
+          <TouchableOpacity onPress={() => navigation.navigate('PartnerScan')}>
+            <View style={styles.card}>
+              <Image source={partnerImage} style={styles.cardIcon} />
+              <Text style={styles.cardText}>Partner</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Customer Card */}
+          <View style={styles.card}>
+            <Image source={customerImage} style={styles.cardIcon} />
+            <Text style={styles.cardText}>Customer</Text>
+          </View>
         </View>
-        {/* Customer Card */}
-        <View style={styles.card}>
-          <Image source={customerImage} style={styles.cardIcon} />
-          <Text style={styles.cardText}>Customer</Text>
-        </View>
-      </View>
+      </ImageBackground>
 
       {/* Navigation bar placeholder (replace with your navigation setup) */}
-      <View style={styles.navBar}>
-        <Text style={styles.navBarText}>Navigation Bar</Text>
-      </View>
+      {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
     </View>
   );
 };
@@ -33,11 +48,20 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center', // Center cards vertically
+    justifyContent: 'center', // Centers cards vertically (optional, can be removed)
     backgroundColor: '#112D63',
-},
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  colorOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
   cardsContainer: {
-    flexDirection: 'column', // Stack cards vertically
+    flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
     width: '100%',
     marginBottom: 100,
@@ -49,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '45%',
-    marginVertical: 10, // Add margin between cards
+    marginVertical: 10,
   },
   cardIcon: {
     marginBottom: 10,
@@ -59,18 +83,6 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  navBar: {
-    position: 'absolute', // Position bar at the bottom
-    bottom: 0,
-    width: '100%',
-    backgroundColor: '#F0F0F0', // Adjust background color if needed
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10, // Add padding for content
-  },
-  navBarText: {
-    fontSize: 16,
   },
 });
 

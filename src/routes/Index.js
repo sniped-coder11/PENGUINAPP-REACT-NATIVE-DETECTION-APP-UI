@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-//import { MaterialCommunityIcons } (optional) from '@expo/vector-icons'; // For icons
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // For icons
 
-import HomeScreen from '../screens/HomeScreen'; // Replace with your HomeScreen path
+import HomeScreen from '../screens/HomeScreen';
+import PartnerScreen from '../screens/PartnerScanScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,12 +15,19 @@ const Routes = () => {
         component={HomeScreen}
         options={{
           headerTitle: 'Home', // Optional: Set header title
-          //tabBarIcon: ({ color }) => ( // Optional: Icon for future tab bar usage
-            //<MaterialCommunityIcons name="home" color={color} size={26} />
-          //),
+          tabBarIcon: ({ color }) => ( // Optional: Icon for future tab bar usage
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
         }}
       />
       {/* Add more screens here if needed */}
+      <Stack.Screen
+        name="PartnerScan" // Clear name for PartnerScan functionality
+        component={PartnerScreen}
+        options={{
+          headerTitle: 'Partner-Camera', // Optional: Set header title
+        }}
+      />
     </Stack.Navigator>
   );
 };

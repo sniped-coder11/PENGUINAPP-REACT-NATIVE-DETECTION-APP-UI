@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 
 const CustomBottomNavigation = ({ navigation, tabBarData }) => {
   const handlePress = (screenName) => navigation.navigate(screenName);
