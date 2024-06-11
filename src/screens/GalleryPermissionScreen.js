@@ -1,77 +1,81 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-//import * as Permissions from 'react-native-permissions';
-import * as Permissions from 'expo-core';
+import * as ImagePicker from 'expo-image-picker';
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
-//import { useFonts } from '@expo/expo-font';
 const Tab = createBottomTabNavigator();
 
 const GalleryPermissionScreen = ({ navigation }) => {
-  const [hasPermission, setHasPermission] = useState(false);
+  const [hasPermission, setHasPermission] = useState(null); // Permission status
+  const [selectedImage, setSelectedImage] = useState(null); // Stores selected image URI
+
   const homeImg = require('../assets/images/home.png');
   const galleryImg = require('../assets/images/galleryIcon.png');
   const cameraImg = require('../assets/images/cameraIcon.png');
-  const photoLibImg = require('../assets/images/scannedImg.png'); 
-  const tabBarData = [ 
+  const photoLibImg = require('../assets/images/scannedImg.png');
+  const tabBarData = [
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
     { name: 'Library', image: photoLibImg },
   ];
 
+  const requestCameraRollPermission = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    setHasPermission(status === 'granted');
+  };
 
-  const requestPhotoLibraryPermission = async () => {
-    const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-    if (status === 'granted') {
-      setHasPermission(true);
-      console.log('Photo library permission granted');
-      navigation.navigate('PhotoGridScreen'); // Navigate to PhotoGridScreen
+  const pickImage = async () => {
+    // Check if permission is granted
+    if (hasPermission === null) {
+      await requestCameraRollPermission();
+      return;
+    }
+
+    if (hasPermission === false) {
+      alert('Sorry, we need camera roll permissions to access the gallery');
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Allow only images
+      allowsEditing: true, // Enable image editing
+      aspect: [4, 3], // Optional aspect ratio
+      quality: 1, // Optional image quality (0-1)
+    });
+
+    if (!result.cancelled) {
+      setSelectedImage(result.uri);
+    }
+  };
+
+  const navigateToPhotoGrid = () => {
+    if (selectedImage) {
+      navigation.navigate('PhotoGridScreen', { imageUri: selectedImage }); // Pass selected image URI as a param
     } else {
-      console.log('Photo library permission denied');
-      // Handle permission denied scenario (e.g., display an alert)
+      alert('Please select an image first');
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Background color */}
-      <View style={styles.backgroundColor} />
-
-      {/* Permissions container card with rounded top */}
-      <View style={styles.permissionCard}>
-        <Text style={styles.permissionText}>Permission</Text>
-
-        <Text style={styles.grantAccessText}>
-          Grant access to your photos for seamless scanning
-        </Text>
-
-        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
-          <Text style={styles.permissionButtonText}>Allow access to all photos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
-          <Text style={styles.permissionButtonText}>Allow access to some photos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
-          <Text style={styles.permissionButtonText}>Deny access to photos</Text>
-        </TouchableOpacity>
-
-        {/* Removed commented-out permission options section */}
-      </View>
+      {/* Background color (optional) */}
+      {/* <View style={styles.backgroundColor} /> */}
 
       {/* Semicircle card with "Choose From The Gallery" text and gallery icon */}
-      <View style={styles.galleryCard}>
+      <TouchableOpacity style={styles.galleryCard} disabled={hasPermission === false} onPress={pickImage}>
         <Image source={require('../assets/images/gallerycontainerImg.png')} style={styles.galleryCardImage} />
-      </View>
+        {hasPermission === false && <Text>Permission Required</Text>}
+      </TouchableOpacity>
+
+      {/* Button to navigate to PhotoGridScreen (optional) */}
+      {selectedImage && (
+        <TouchableOpacity style={styles.photoGridButton} onPress={navigateToPhotoGrid}>
+          <Text style={styles.photoGridButtonText}>View in PhotoGrid</Text>
+        </TouchableOpacity>
+      )}
 
       {/* Custom Bottom Navigation */}
       <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
@@ -95,6 +99,27 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     height: '100%',
+  },
+  galleryCard: {
+    borderRadius: 60, // Adjust for semicircle shape
+    padding: 20,
+    alignItems: 'center', // Center content horizontally
+    position: 'absolute', // Make the gallery card absolute
+    bottom: 260,
+    left: '18%',
+    transform: [{ translateX: -50 }], // Center horizontally
+  },
+  photoGridButton: {
+    backgroundColor: '#eee',
+    padding: 10,
+    borderRadius: 5,
+    position: 'absolute', // Make the button absolute
+    bottom: 50, // Adjust button position from the bottom
+    right: 20, // Adjust button position from the right
+  },
+  photoGridButtonText: {
+    fontSize: 16,
+    color: 'black',
   },
   permissionCard: {
     backgroundColor: 'white',
@@ -122,15 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'left', // Center text within button
   },
-  galleryCard: {
-    borderRadius: 60, // Adjust for semicircle shape
-    padding: 20,
-    alignItems: 'center', // Center content horizontally
-    position: 'absolute', // Make the gallery card absolute
-    bottom: 150,
-    left: '18%',
-    transform: [{ translateX: -50 }], // Center horizontally
-  },
   
   navBar: {
     position: "absolute",
@@ -149,6 +165,7 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
   },
+
 
   //galleryCardText: {
    // fontSize: 16,

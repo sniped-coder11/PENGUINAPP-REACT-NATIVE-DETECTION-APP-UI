@@ -9,7 +9,7 @@ import PartnerQRScanner from '../screens/PartnerScannerQR';
 import CustomerQRScanner from '../screens/CustomerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
-import PhotoGridScreen from '../screens/PhotoGridScreen';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -69,13 +69,6 @@ const Routes = () => {
         component={GalleryPermissionScreen}
         options={{
           headerTitle: '', // Set clear header title for user context
-        }}
-      />
-      <Stack.Screen
-        name="PhotoGridScreen"
-        component={PhotoGridScreen}
-        options={{
-          headerTitle: '', // Optional: Set a clear header title
         }}
       />
       </Stack.Navigator>
