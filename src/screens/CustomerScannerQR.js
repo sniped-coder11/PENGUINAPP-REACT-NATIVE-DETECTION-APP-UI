@@ -3,158 +3,98 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+import { Camera, useCameraPermissions } from 'expo-camera';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-//import { useFonts } from '@expo/expo-font';
-
 const Tab = createBottomTabNavigator();
 
-const ImageScanner = ({ onPress }) => {
-  const [isAnimating, setIsAnimating] = useState(false);
-  const animation = useRef(new Animated.Value(0)).current;
-
-  const handlePress = () => {
-    if (isAnimating) {
-      onPress();
-    }
-  };
-
-  const startAnimation = () => {
-    setIsAnimating(true);
-    Animated.timing(animation, {
-      toValue: 1,
-      duration: 1500, // Adjust duration as needed
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const LineAnimation = ({ animation, style }) => (
-    <Animated.View
-      style={[styles.lineAnimation, { height: animation.interpolate({ inputRange: [0, 1], outputRange: ['0%', '100%'] }) }]}>
-    </Animated.View>
-  );
-
+const QrCodeCard = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={startAnimation} style={styles.squareBox}>
-      <Text style={styles.scanText}>Scan Your QR Code</Text>
-      <View style={styles.qrImageContainer}>
-        <Image source={require('../assets/images/QRCodeImg.png')} style={styles.qrImage} />
-        {isAnimating && <LineAnimation animation={animation} style={styles.lineAnimation} />}
-      </View>
+    <TouchableOpacity onPress={onPress} style={styles.qrCodeCardContainer}>
+      <Text style={styles.qrCodeCardText}>Scan QR Code</Text>
     </TouchableOpacity>
   );
 };
 
-const QrCodeCard = ({ onPress }) => {
-    return (
-      <TouchableOpacity onPress={onPress} style={styles.qrCodeCardContainer}>
-        <Image
-          source={require('../assets/images/ScanQRCodeimg.png')} // Replace with your image
-          style={styles.qrCodeCardImage}
-        />
-        <Text style={styles.qrCodeCardText}>Scan QR Code</Text>
-      </TouchableOpacity>
-    );
-  };
-  
-  const CustomerQRScanner = ({ navigation }) => {
-    const [hasPermission, setHasPermission] = useState(null);
-    const [scannedData, setScannedData] = useState(null);
-    const cameraRef = useRef(null);
-    const homeImg = require('../assets/images/home.png');
-    const galleryImg = require('../assets/images/galleryIcon.png');
-    const cameraImg = require('../assets/images/cameraIcon.png');
-    const photoLibImg = require('../assets/images/scannedImg.png'); 
-    const tabBarData = [ 
+const CustomerQRScanner = ({ navigation }) => {
+  const [hasPermission, requestPermission] = useCameraPermissions();
+  const [scannedData, setScannedData] = useState(null);
+  const cameraRef = useRef(null);
+
+  const homeImg = require('../assets/images/home.png');
+  const galleryImg = require('../assets/images/galleryIcon.png');
+  const cameraImg = require('../assets/images/cameraIcon.png');
+  const photoLibImg = require('../assets/images/scannedImg.png');
+  const tabBarData = [
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
     { name: 'Library', image: photoLibImg },
   ];
-  
-    const handleQrCodeScan = async () => {
-      if (hasPermission === null) {
-        return; // Handle permission request if not granted yet
-      }
-  
-      if (hasPermission === false) {
-        // Request camera permission if not granted
-        const status = await RNCamera.requestCameraPermission();
-        setHasPermission(status);
-        return;
-      }
 
-      try {
-        const data = await cameraRef.current.readRNBarcodes();
-        const { data: qrData } = data[0]; // Assuming QR code is the first element
-        setScannedData(qrData);
-        console.log('QR code data:', qrData); // Log the scanned data
+  const handleQrCodeScan = async () => {
+    if (hasPermission === null) {
+      return; // Handle permission request if not granted yet
+    }
 
-        // Navigate to CustomerDetails screen with scanned data
-        navigation.navigate('CustomerDetails', { qrData });
+    if (hasPermission === false) {
+      // Request camera permission if not granted
+      const { status } = await requestPermission();
+      return;
+    }
 
-      } catch (err) {
-        console.error('QR code scanning error:', err);
-      }
-    };
-  
-    useEffect(() => {
-      (async () => {
-        const status = await RNCamera.requestCameraPermission();
-        setHasPermission(status);
-      })();
-    }, []);
-  
-    return (
-      <View style={styles.container}>
-        {/* Background image */}
-        <Image
-          source={require('../assets/images/backgroundImg.png')} // Replace with your image path
-          style={styles.backgroundImage}
-        />
-  
-        {/* Content container on top of the background image */}
-        <View style={styles.contentContainer}>
-          <Text style={styles.topText}>Scan Your QR Code</Text>
-  
-          <ImageScanner />
-  
-          {/* Elongated rounded rectangular container */}
-          <TouchableOpacity style={styles.elongatedContainer} onPress={handleQrCodeScan}>
-            <Text style={styles.elongatedContainerText}>Scan QR Code</Text>
-            {/* Add any other content you want here */}
-          </TouchableOpacity>
-  
-          <QrCodeCard onPress={handleQrCodeScan} />
-  
-          {hasPermission === false && <Text>Camera permission denied.</Text>}
-        </View>
-        {hasPermission === true && (
-          <RNCamera
-            ref={cameraRef}
-            style={StyleSheet.absoluteFillObject}
-            onBarCodeScanned={handleQrCodeScan}
-            captureAudio={false} // Optional: Disable audio recording (if not needed)
-          />
-        )}
+    try {
+      const data = await cameraRef.current.barcodeScanAsync();
+      const { data: qrData } = data; // Assuming QR code is the first element
+      setScannedData(qrData);
+      console.log('QR code data:', qrData); // Log the scanned data
 
-       {/* Custom Bottom Navigation */}
-      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
-
-     {/* Go back button */}
-     <TouchableOpacity style={styles.goBackButton}>
-       <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
-     </TouchableOpacity>
-     </View>
-    );
+      // Navigate to CustomerDetails screen with scanned data
+      navigation.navigate('CustomerDetails', { qrData });
+    } catch (err) {
+      console.error('QR code scanning error:', err);
+    }
   };
+
+  useEffect(() => {
+    if (hasPermission === null) {
+      requestPermission();
+    }
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      {hasPermission === false && <Text>Camera permission denied.</Text>}
+
+      {hasPermission === true && (
+        <Camera
+          ref={cameraRef}
+          style={StyleSheet.absoluteFillObject}
+          onBarCodeScanned={handleQrCodeScan}
+          barCodeTypes={[Camera.Constants.BarCodeType.QR_CODE]}
+        />
+      )}
+
+      {/* Content container on top of the camera preview */}
+      <View style={styles.contentContainer}>
+        <Text style={styles.topText}>Scan Your QR Code</Text>
+
+        <QrCodeCard onPress={handleQrCodeScan} />
+
+        <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
+      </View>
+
+      <TouchableOpacity style={styles.goBackButton}>
+        <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -201,14 +141,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
-  },
-  lineAnimation: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
   },
   qrCodeCardContainer: {
     backgroundColor: 'white', // Adjust background color as needed
