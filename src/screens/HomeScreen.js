@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Image, ImageBackground, TouchableOpacity } from
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+
+
 //import { useFonts } from '@expo/expo-font';
 
 const Tab = createBottomTabNavigator();

@@ -5,7 +5,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 //import { useFonts } from '@expo/expo-font';
-
 const Tab = createBottomTabNavigator();
 
 const ScanTypeScreen = ({ navigation }) => {

@@ -8,14 +8,13 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 //import * as Permissions from 'react-native-permissions';
+import * as Permissions from 'expo-core';
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
 //import { useFonts } from '@expo/expo-font';
 const Tab = createBottomTabNavigator();
-
-
 
 const GalleryPermissionScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(false);
@@ -31,11 +30,12 @@ const GalleryPermissionScreen = ({ navigation }) => {
   ];
 
 
-  const handlePermissionRequest = async () => {
+  const requestPhotoLibraryPermission = async () => {
     const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
     if (status === 'granted') {
       setHasPermission(true);
       console.log('Photo library permission granted');
+      navigation.navigate('PhotoGridScreen'); // Navigate to PhotoGridScreen
     } else {
       console.log('Photo library permission denied');
       // Handle permission denied scenario (e.g., display an alert)
@@ -54,34 +54,32 @@ const GalleryPermissionScreen = ({ navigation }) => {
         <Text style={styles.grantAccessText}>
           Grant access to your photos for seamless scanning
         </Text>
-        {/* Rectangular containers for permission options */}
-        <View style={styles.permissionOptionContainer}>
-          <TouchableOpacity style={styles.permissionOption}>
-            <Text style={styles.permissionOptionText}>Allow access to all photos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.permissionOption}>
-            <Text style={styles.permissionOptionText}>Allow access to selected photos</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.permissionOption}>
-            <Text style={styles.permissionOptionText}>Deny access to photos</Text>
-          </TouchableOpacity>
-        </View>
+
+        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
+          <Text style={styles.permissionButtonText}>Allow access to all photos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
+          <Text style={styles.permissionButtonText}>Allow access to some photos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.permissionButton} onPress={requestPhotoLibraryPermission}>
+          <Text style={styles.permissionButtonText}>Deny access to photos</Text>
+        </TouchableOpacity>
+
+        {/* Removed commented-out permission options section */}
       </View>
 
       {/* Semicircle card with "Choose From The Gallery" text and gallery icon */}
       <View style={styles.galleryCard}>
-            <Image source={require('../assets/images/gallerycontainerImg.png')} style={styles.galleryCardImage} />
-            {/*<Text style={styles.galleryCardText}>Choose From The Gallery</Text>
-            <Image source={require('../assets/images/galleryIcon.png')} style={styles.galleryIcon} />*/}
-         </View>
+        <Image source={require('../assets/images/gallerycontainerImg.png')} style={styles.galleryCardImage} />
+      </View>
 
-        {/* Custom Bottom Navigation */}
-        <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
+      {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
 
-        {/* Go back button */}
-        <TouchableOpacity style={styles.goBackButton}>
-            <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
-        </TouchableOpacity>
+      {/* Go back button */}
+      <TouchableOpacity style={styles.goBackButton}>
+        <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginTop: 100,
     marginLeft: 30,
-    marginRight: 30,// Adjust spacing as needed
+    marginRight: 30, // Adjust spacing as needed
   },
   permissionText: {
     fontSize: 16,
@@ -114,17 +112,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10, // Adjust spacing as needed
   },
-  permissionOptionContainer: {
-    // Remove flexDirection for vertical stacking
-  },
-  permissionOption: {
+  permissionButton: {
     backgroundColor: '#eee',
-    padding: 7,
-    borderRadius: 4,
-    marginBottom: 12, // Add spacing between options
+    padding: 5,
+    borderRadius: 5,
+    marginTop: 12, // Add spacing after grant access text
   },
-  permissionOptionText: {
-    fontSize: 12,
+  permissionButtonText: {
+    fontSize: 15,
+    textAlign: 'left', // Center text within button
   },
   galleryCard: {
     borderRadius: 60, // Adjust for semicircle shape
@@ -135,6 +131,7 @@ const styles = StyleSheet.create({
     left: '18%',
     transform: [{ translateX: -50 }], // Center horizontally
   },
+  
   navBar: {
     position: "absolute",
     bottom: 0,
@@ -152,6 +149,7 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10,
   },
+
   //galleryCardText: {
    // fontSize: 16,
  //   marginBottom: 10, // Adjust spacing as needed

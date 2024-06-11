@@ -12,6 +12,7 @@ import CardContainer from '../components/Card-Container'; // Import CardContaine
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+
 const CustomerScreen = ({ navigation }) => {
   const backgroundImage = require("../assets/images/backgroundImg.png");
   const galleryIcon = require("../assets/images/galleryIcon.png");
