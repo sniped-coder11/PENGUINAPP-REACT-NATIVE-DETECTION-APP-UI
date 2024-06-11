@@ -6,10 +6,30 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import * as Permissions from 'react-native-permissions';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+//import * as Permissions from 'react-native-permissions';
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
+//import { useFonts } from '@expo/expo-font';
+const Tab = createBottomTabNavigator();
+
+
 
 const GalleryPermissionScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(false);
+  const homeImg = require('../assets/images/home.png');
+  const galleryImg = require('../assets/images/galleryIcon.png');
+  const cameraImg = require('../assets/images/cameraIcon.png');
+  const photoLibImg = require('../assets/images/scannedImg.png'); 
+  const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryImg },
+    { name: 'Camera', image: cameraImg },
+    { name: 'Library', image: photoLibImg },
+  ];
+
 
   const handlePermissionRequest = async () => {
     const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
@@ -34,7 +54,6 @@ const GalleryPermissionScreen = ({ navigation }) => {
         <Text style={styles.grantAccessText}>
           Grant access to your photos for seamless scanning
         </Text>
-
         {/* Rectangular containers for permission options */}
         <View style={styles.permissionOptionContainer}>
           <TouchableOpacity style={styles.permissionOption}>
@@ -51,9 +70,18 @@ const GalleryPermissionScreen = ({ navigation }) => {
 
       {/* Semicircle card with "Choose From The Gallery" text and gallery icon */}
       <View style={styles.galleryCard}>
-        <Text style={styles.galleryCardText}>Choose From The Gallery</Text>
-        <Image source={require('../assets/images/galleryIcon.png')} style={styles.galleryIcon} />
-      </View>
+            <Image source={require('../assets/images/gallerycontainerImg.png')} style={styles.galleryCardImage} />
+            {/*<Text style={styles.galleryCardText}>Choose From The Gallery</Text>
+            <Image source={require('../assets/images/galleryIcon.png')} style={styles.galleryIcon} />*/}
+         </View>
+
+        {/* Custom Bottom Navigation */}
+        <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
+
+        {/* Go back button */}
+        <TouchableOpacity style={styles.goBackButton}>
+            <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+        </TouchableOpacity>
     </View>
   );
 };
@@ -61,7 +89,7 @@ const GalleryPermissionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0', // Adjust background color as needed
+    backgroundColor: '#08245C', // Adjust background color as needed
   },
   backgroundColor: {
     position: 'absolute',
@@ -72,9 +100,11 @@ const styles = StyleSheet.create({
   },
   permissionCard: {
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 20,
-    marginTop: 100, // Adjust spacing as needed
+    borderRadius: 15,
+    padding: 12,
+    marginTop: 100,
+    marginLeft: 30,
+    marginRight: 30,// Adjust spacing as needed
   },
   permissionText: {
     fontSize: 16,
@@ -85,32 +115,51 @@ const styles = StyleSheet.create({
     marginBottom: 10, // Adjust spacing as needed
   },
   permissionOptionContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', // Distribute options horizontally
+    // Remove flexDirection for vertical stacking
   },
   permissionOption: {
     backgroundColor: '#eee',
-    padding: 10,
-    borderRadius: 5,
+    padding: 7,
+    borderRadius: 4,
+    marginBottom: 12, // Add spacing between options
   },
   permissionOptionText: {
     fontSize: 12,
   },
   galleryCard: {
-    backgroundColor: '#ccc', // Adjust background color as needed
-    borderRadius: 50, // Adjust for semicircle shape
+    borderRadius: 60, // Adjust for semicircle shape
     padding: 20,
-    marginTop: 50, // Adjust spacing as needed
     alignItems: 'center', // Center content horizontally
+    position: 'absolute', // Make the gallery card absolute
+    bottom: 150,
+    left: '18%',
+    transform: [{ translateX: -50 }], // Center horizontally
   },
-  galleryCardText: {
+  navBar: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#F0F0F0",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+  },
+  navBarText: {
     fontSize: 16,
-    marginBottom: 10, // Adjust spacing as needed
   },
-  galleryIcon: {
-    width: 50,
-    height: 50, // Adjust image size as needed
+  goBackButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
   },
+  //galleryCardText: {
+   // fontSize: 16,
+ //   marginBottom: 10, // Adjust spacing as needed
+ // },
+ // galleryIcon: {
+ //   width: 50,
+ //   height: 50, // Adjust image size as needed
+ // },
 });
 
 export default GalleryPermissionScreen;

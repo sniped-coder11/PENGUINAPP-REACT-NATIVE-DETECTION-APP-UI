@@ -1,9 +1,29 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import ImageScanner from '../components/ImageScanner';
 import CardContainer from '../components/Card-Container'; // Assuming CardContainer is in the same directory
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
+//import { useFonts } from '@expo/expo-font';
+
+const Tab = createBottomTabNavigator();
+
 
 const PartnerQRScanner = ({ navigation }) => {
+
+  const homeImg = require('../assets/images/home.png');
+  const galleryImg = require('../assets/images/galleryIcon.png');
+  const cameraImg = require('../assets/images/cameraIcon.png');
+  const photoLibImg = require('../assets/images/scannedImg.png'); 
+  const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryImg },
+    { name: 'Camera', image: cameraImg },
+    { name: 'Library', image: photoLibImg },
+  ];
+
   const handlePress = () => {
     // Handle click event (optional)
     navigation.navigate('NextScreen'); // Or perform other actions
@@ -28,6 +48,13 @@ const PartnerQRScanner = ({ navigation }) => {
           <ImageScanner /> // Render ImageScanner component within CardContainer
         </CardContainer>
       </View>
+
+      <TouchableOpacity style={styles.goBackButton}>
+            <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+        </TouchableOpacity>
+
+      {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
     </View>
   );
 };

@@ -9,11 +9,27 @@ import {
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CardContainer from '../components/Card-Container'; 
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+//import { useFonts } from '@expo/expo-font';
+
+const Tab = createBottomTabNavigator();
 
 const PartnerScreen = ({ navigation }) => {
   const backgroundImage = require('../assets/images/backgroundImg.png');
   const cameraIcon = require('../assets/images/cameraIcon.png');
-  const iconContainerImage = require('../assets/images/icon-container.png'); 
+  const iconContainerImage = require('../assets/images/icon-container.png');
+  const homeImg = require('../assets/images/home.png');
+  const galleryImg = require('../assets/images/galleryIcon.png');
+  const cameraImg = require('../assets/images/cameraIcon.png');
+  const photoLibImg = require('../assets/images/scannedImg.png'); 
+  const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryImg },
+    { name: 'Camera', image: cameraImg },
+    { name: 'Library', image: photoLibImg },
+  ]; 
 
   return (
     <View style={styles.container}>
@@ -24,7 +40,7 @@ const PartnerScreen = ({ navigation }) => {
           <CardContainer
             title="Use Camera To Scan"
             image={cameraIcon}
-            onPress={() => navigation.navigate('PartnerQRScanner')}
+            onPress={() => navigation.navigate('ScanTypeScreen')}
           >
             {/* Place cameraIcon within CardContainer (optional) */}
             <Image source={cameraIcon} style={styles.cardIcon} />
@@ -32,11 +48,8 @@ const PartnerScreen = ({ navigation }) => {
         </View>
         </ImageBackground>
 
-       {/* Navigation bar placeholder */}
-        <View style={styles.navBar}>
-          <Text style={styles.navBarText}>Navigation Bar</Text>
-        </View>
-      
+       
+       <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
   
         {/* Go back button in top right corner */}
         <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>

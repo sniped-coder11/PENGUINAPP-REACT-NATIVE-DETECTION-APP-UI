@@ -7,6 +7,9 @@ import PartnerScreen from '../screens/PartnerScanScreen';
 import CustomerScreen from '../screens/CustomerScanScreen';
 import PartnerQRScanner from '../screens/PartnerScannerQR'; 
 import CustomerQRScanner from '../screens/CustomerScannerQR';
+import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
+import ScanTypeScreen from '../screens/ScanTypePartner';
+import PhotoGridScreen from '../screens/PhotoGridScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +42,13 @@ const Routes = () => {
           headerTitle: '', // Set clear header title for user context
         }}
       />
+      <Stack.Screen
+        name="ScanTypeScreen"
+        component={ScanTypeScreen}
+        options={{
+          headerTitle: '', // Set clear header title
+        }}
+      />
         <Stack.Screen
           name="CustomerScan" 
           component={CustomerScreen}
@@ -52,6 +62,20 @@ const Routes = () => {
         component={CustomerQRScanner}
         options={{
           headerTitle: '', // Set clear header title for user context
+        }}
+      />
+      <Stack.Screen
+        name="GalleryScreen"
+        component={GalleryPermissionScreen}
+        options={{
+          headerTitle: '', // Set clear header title for user context
+        }}
+      />
+      <Stack.Screen
+        name="PhotoGridScreen"
+        component={PhotoGridScreen}
+        options={{
+          headerTitle: '', // Optional: Set a clear header title
         }}
       />
       </Stack.Navigator>

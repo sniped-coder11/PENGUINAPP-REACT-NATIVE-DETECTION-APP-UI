@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+//import { useFonts } from '@expo/expo-font';
+
+const Tab = createBottomTabNavigator();
 
 const ImageScanner = ({ onPress }) => {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -62,6 +68,16 @@ const QrCodeCard = ({ onPress }) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scannedData, setScannedData] = useState(null);
     const cameraRef = useRef(null);
+    const homeImg = require('../assets/images/home.png');
+    const galleryImg = require('../assets/images/galleryIcon.png');
+    const cameraImg = require('../assets/images/cameraIcon.png');
+    const photoLibImg = require('../assets/images/scannedImg.png'); 
+    const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryImg },
+    { name: 'Camera', image: cameraImg },
+    { name: 'Library', image: photoLibImg },
+  ];
   
     const handleQrCodeScan = async () => {
       if (hasPermission === null) {
@@ -129,10 +145,8 @@ const QrCodeCard = ({ onPress }) => {
           />
         )}
 
-       {/* Navigation bar placeholder */}
-       <View style={styles.navBar}>
-         <Text style={styles.navBarText}>Navigation Bar</Text>
-       </View>
+       {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
 
      {/* Go back button */}
      <TouchableOpacity style={styles.goBackButton}>

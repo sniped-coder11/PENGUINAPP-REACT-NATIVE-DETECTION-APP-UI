@@ -9,12 +9,21 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; // Import for go back button icon
 import CardContainer from '../components/Card-Container'; // Import CardContainer
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const CustomerScreen = ({ navigation }) => {
   const backgroundImage = require("../assets/images/backgroundImg.png");
   const galleryIcon = require("../assets/images/galleryIcon.png");
-
   const cameraIcon = require('../assets/images/cameraIcon.png');
+  const homeImg = require('../assets/images/home.png');
+  const photoLibImg = require('../assets/images/scannedImg.png'); 
+  const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryIcon },
+    { name: 'Camera', image: cameraIcon },
+    { name: 'Library', image: photoLibImg },
+  ];
 
   const cardOptions = [
     {
@@ -25,7 +34,7 @@ const CustomerScreen = ({ navigation }) => {
     {
       title: "Choose from Gallery",
       icon: galleryIcon,
-      onPress: () => navigation.navigate("PartnerScan"),
+      onPress: () => navigation.navigate("GalleryScreen"),
     },
   ];
 
@@ -53,15 +62,13 @@ const CustomerScreen = ({ navigation }) => {
   <CardContainer
     title="Choose From Gallery"
     image={galleryIcon}
-    onPress={() => navigation.navigate("CustomerScan")}
+    onPress={() => navigation.navigate("GalleryScreen")}
   />
 </View>
 
 
-        {/* Navigation bar placeholder */}
-        <View style={styles.navBar}>
-          <Text style={styles.navBarText}>Navigation Bar</Text>
-        </View>
+        {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
 
         {/* Go back button */}
         <TouchableOpacity style={styles.goBackButton}>
