@@ -2,34 +2,41 @@ import React from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   Image,
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import for go back button icon
-import CardContainer from '../components/Card-Container'; // Import CardContainer
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import CardContainer from '../components/Card-Container'; 
 
 const PartnerScreen = ({ navigation }) => {
-    const backgroundImage = require('../assets/images/backgroundImg.png');
-    const cameraIcon = require('../assets/images/cameraIcon.png'); // Replace with your card icon
-    const iconContainerImage = require('../assets/images/icon-container.png'); 
-  
-    return (
-      <View style={styles.container}>
-        <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-          {/* Card container with vertical centering */}
-          <View style={styles.centeredCard}>
-            {/* Partner Card with icon container */}
-            <CardContainer
-              title="Use Camera To Scan"
-              image={cameraIcon}
-              onPress={() => navigation.navigate('ScannerScreen')}
-            >
-              {/* Place cameraIcon within CardContainer (optional) */}
-              <Image source={cameraIcon} style={styles.cardIcon} />
-            </CardContainer>
-          </View>
+  const backgroundImage = require('../assets/images/backgroundImg.png');
+  const cameraIcon = require('../assets/images/cameraIcon.png');
+  const iconContainerImage = require('../assets/images/icon-container.png'); 
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+        {/* Card container with vertical centering */}
+        <View style={styles.centeredCard}>
+          {/* Partner Card with icon container */}
+          <CardContainer
+            title="Use Camera To Scan"
+            image={cameraIcon}
+            onPress={() => navigation.navigate('PartnerQRScanner')}
+          >
+            {/* Place cameraIcon within CardContainer (optional) */}
+            <Image source={cameraIcon} style={styles.cardIcon} />
+          </CardContainer>
+        </View>
         </ImageBackground>
+
+       {/* Navigation bar placeholder */}
+        <View style={styles.navBar}>
+          <Text style={styles.navBarText}>Navigation Bar</Text>
+        </View>
+      
   
         {/* Go back button in top right corner */}
         <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
@@ -53,13 +60,24 @@ const PartnerScreen = ({ navigation }) => {
       alignItems: 'center',
     },
     cardIcon: {
-      // Adjust position and size based on your icon container image
       position: 'absolute',
-      top: 20, // Adjust vertical position
-      left: 20, // Adjust horizontal position
-      width: 60, // Adjust width
-      height: 60, // Adjust height
+      top: 20, 
+      left: 20, 
+      width: 60, 
+      height: 60, 
       resizeMode: 'contain',
+    },
+    navBar: {
+      position: "absolute",
+      bottom: 0,
+      width: "100%",
+      backgroundColor: "#F0F0F0",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 10,
+    },
+    navBarText: {
+      fontSize: 16,
     },
     goBackButton: {
       position: 'absolute',

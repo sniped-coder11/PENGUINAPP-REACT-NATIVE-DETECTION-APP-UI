@@ -5,6 +5,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'; // For icons
 import HomeScreen from '../screens/HomeScreen';
 import PartnerScreen from '../screens/PartnerScanScreen';
 import CustomerScreen from '../screens/CustomerScanScreen';
+import PartnerQRScanner from '../screens/PartnerScannerQR'; 
+import CustomerQRScanner from '../screens/CustomerScannerQR';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,14 @@ const Routes = () => {
             headerTitle: '', // Optional: Set header title
           }}
         />
+        {/* Insert PartnerScannerQR screen here for proper navigation flow */}
+      <Stack.Screen
+        name="PartnerQRScanner"
+        component={PartnerQRScanner}
+        options={{
+          headerTitle: '', // Set clear header title for user context
+        }}
+      />
         <Stack.Screen
           name="CustomerScan" 
           component={CustomerScreen}
@@ -36,6 +46,14 @@ const Routes = () => {
             headerTitle: '', // Optional: Set header title
           }}
         />
+        {/* Insert CustomerQRScanner screen here for proper navigation flow */}
+      <Stack.Screen
+        name="CustomerQRScanner" // Clear name for QR scanning functionality
+        component={CustomerQRScanner}
+        options={{
+          headerTitle: '', // Set clear header title for user context
+        }}
+      />
       </Stack.Navigator>
     );
   };

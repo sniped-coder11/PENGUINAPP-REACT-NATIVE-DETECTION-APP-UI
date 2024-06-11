@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 20,
     alignItems: 'center',
+    margin: 10,
     justifyContent: 'space-between', // Space between icon and text
   },
   iconContainer: {

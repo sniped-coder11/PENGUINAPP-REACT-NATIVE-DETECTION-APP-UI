@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 const Card = ({ title, icon, iconContainerImage, onPress, backgroundColor, style }) => {
+  console.log("icon ===> ", icon);
   return (
     <TouchableOpacity onPress={onPress} style={[styles.card, backgroundColor && { backgroundColor }, style]}>
       {iconContainerImage && (
