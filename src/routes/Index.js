@@ -48,7 +48,7 @@ const Routes = () => {
         />
         {/* Insert CustomerQRScanner screen here for proper navigation flow */}
       <Stack.Screen
-        name="CustomerQRScanner" // Clear name for QR scanning functionality
+        name="CustomerQRScan" // Clear name for QR scanning functionality
         component={CustomerQRScanner}
         options={{
           headerTitle: '', // Set clear header title for user context

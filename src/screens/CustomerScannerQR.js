@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -50,7 +50,7 @@ const QrCodeCard = ({ onPress }) => {
     return (
       <TouchableOpacity onPress={onPress} style={styles.qrCodeCardContainer}>
         <Image
-          source={require('../assets/images/scanQrCodeImage.png')} // Replace with your image
+          source={require('../assets/images/ScanQRCodeimg.png')} // Replace with your image
           style={styles.qrCodeCardImage}
         />
         <Text style={styles.qrCodeCardText}>Scan QR Code</Text>
@@ -98,15 +98,24 @@ const QrCodeCard = ({ onPress }) => {
   
     return (
       <View style={styles.container}>
-        {/* Background image (optional) - Assuming you have a separate component for this */}
-        <View style={styles.backgroundImage} />
+        {/* Background image */}
+        <Image
+          source={require('../assets/images/backgroundImg.png')} // Replace with your image path
+          style={styles.backgroundImage}
+        />
   
+        {/* Content container on top of the background image */}
         <View style={styles.contentContainer}>
           <Text style={styles.topText}>Scan Your QR Code</Text>
   
           <ImageScanner />
   
-          {/* Rounded rectangular container with Scan QR Code image (clickable for scan) */}
+          {/* Elongated rounded rectangular container */}
+          <TouchableOpacity style={styles.elongatedContainer} onPress={handleQrCodeScan}>
+            <Text style={styles.elongatedContainerText}>Scan QR Code</Text>
+            {/* Add any other content you want here */}
+          </TouchableOpacity>
+  
           <QrCodeCard onPress={handleQrCodeScan} />
   
           {hasPermission === false && <Text>Camera permission denied.</Text>}
