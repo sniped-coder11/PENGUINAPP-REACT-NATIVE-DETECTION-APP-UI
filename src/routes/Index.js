@@ -9,6 +9,7 @@ import PartnerQRScanner from '../screens/PartnerScannerQR';
 import CustomerQRScanner from '../screens/CustomerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
+import SimpleQRScanner from '../screens/SimpleQRScanner';
 
 
 const Stack = createNativeStackNavigator();
@@ -58,8 +59,8 @@ const Routes = () => {
         />
         {/* Insert CustomerQRScanner screen here for proper navigation flow */}
       <Stack.Screen
-        name="CustomerQRScan" // Clear name for QR scanning functionality
-        component={CustomerQRScanner}
+        name="SimpleQRScanner" // Clear name for QR scanning functionality
+        component={SimpleQRScanner}
         options={{
           headerTitle: '', // Set clear header title for user context
         }}
