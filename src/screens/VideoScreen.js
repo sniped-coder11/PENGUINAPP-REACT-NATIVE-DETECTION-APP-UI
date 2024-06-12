@@ -8,8 +8,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-//const videoSource = require('./path/to/your/video.mp4');
-const VideoScreen = ({ videoSource }) => {
+
+const VideoScreen = ({ navigation, videoSource = require("../assets/videos/finalvideo.mp4") }) => {
   const video = React.useRef(null);
   const [status, setStatus] = useState({});
   
@@ -29,9 +29,9 @@ const VideoScreen = ({ videoSource }) => {
       <Video
         ref={video}
         style={styles.video}
-        source={{}}
+        source={videoSource}
         useNativeControls
-        resizeMode={Video.RESIZE_MODE_COVER} // Ensure full-screen coverage
+        resizeMode="cover" // Ensure full-screen coverage
         onPlaybackStatusUpdate={setStatus}
       />
       <View style={styles.buttons}>
@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
   video: {
     flex: 1,
     alignSelf: 'stretch',
-
     width: '100%',
     height: '100%',
   },

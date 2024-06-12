@@ -9,6 +9,7 @@ import PartnerQRScanner from '../screens/PartnerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
 import OpenCamera from '../screens/OpenCamera';
+import VideoScreen from '../screens/VideoScreen';
 
 //import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
 
@@ -70,6 +71,13 @@ const Routes = () => {
       <Stack.Screen
         name="OpenCamera"
         component={OpenCamera}
+        options={{
+          headerTitle: '', // Set clear header title for user context
+        }}
+      />
+      <Stack.Screen
+        name="VideoScreen"
+        component={VideoScreen}
         options={{
           headerTitle: '', // Set clear header title for user context
         }}
