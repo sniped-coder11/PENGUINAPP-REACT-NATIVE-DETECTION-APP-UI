@@ -6,11 +6,12 @@ import HomeScreen from '../screens/HomeScreen';
 import PartnerScreen from '../screens/PartnerScanScreen';
 import CustomerScreen from '../screens/CustomerScanScreen';
 import PartnerQRScanner from '../screens/PartnerScannerQR'; 
-//import CustomerQRScanner from '../screens/CustomerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
+import OpenCamera from '../screens/OpenCamera';
+
 //import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
-//import SimpleQRScanner from '../screens/SimpleQRScanner';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -62,6 +63,13 @@ const Routes = () => {
       <Stack.Screen
         name="GalleryScreen"
         component={GalleryPermissionScreen}
+        options={{
+          headerTitle: '', // Set clear header title for user context
+        }}
+      />
+      <Stack.Screen
+        name="OpenCamera"
+        component={OpenCamera}
         options={{
           headerTitle: '', // Set clear header title for user context
         }}
