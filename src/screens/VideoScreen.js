@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Video } from 'expo-video';
+import { StatusBar } from 'expo-status-bar';
+import { View, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { Video } from 'expo-av';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -9,12 +10,9 @@ const Tab = createBottomTabNavigator();
 
 //const videoSource = require('./path/to/your/video.mp4');
 const VideoScreen = ({ videoSource }) => {
-  const videoRef = useRef(null);
+  const video = React.useRef(null);
   const [status, setStatus] = useState({});
   
-
-  
-
   const homeImg = require('../assets/images/home.png');
   const galleryImg = require('../assets/images/galleryIcon.png');
   const cameraImg = require('../assets/images/cameraIcon.png');
@@ -29,13 +27,18 @@ const VideoScreen = ({ videoSource }) => {
   return (
     <View style={styles.container}>
       <Video
-        ref={videoRef}
-        source={videoSource}
+        ref={video}
         style={styles.video}
+        source={{}}
         useNativeControls
         resizeMode={Video.RESIZE_MODE_COVER} // Ensure full-screen coverage
         onPlaybackStatusUpdate={setStatus}
       />
+      <View style={styles.buttons}>
+        <Button title='Understand the Transportational Flow'></Button>
+
+      </View>
+      <StatusBar style="auto" />
 
         <TouchableOpacity style={styles.goBackButton}>
             <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
@@ -49,8 +52,14 @@ const VideoScreen = ({ videoSource }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1, // Fill the entire screen
+    backgroundColor:'#fff',
+    alignItems:'center',
+    justifyContent:'center',
   },
   video: {
+    flex: 1,
+    alignSelf: 'stretch',
+
     width: '100%',
     height: '100%',
   },

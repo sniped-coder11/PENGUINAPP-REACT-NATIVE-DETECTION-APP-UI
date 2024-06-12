@@ -39,7 +39,7 @@ const ScanTypeScreen = ({ navigation }) => {
         {/* Cards container with vertical centering */}
         <View style={[styles.cardsContainer, { justifyContent: 'center' }]}>
           {/* Partner Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('PartnerQRScanner')}>
+          <TouchableOpacity onPress={() => navigation.navigate('OpenCamera')}>
             <View style={styles.card}>
               <ImageBackground source={iconContainerImage} style={styles.iconContainer}>
                 <Image source={vehicleImage} style={styles.cardIcon} />
@@ -49,7 +49,7 @@ const ScanTypeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           {/* Customer Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('PartnerQRScanner')}>
+          <TouchableOpacity onPress={() => navigation.navigate('OpenCamera')}>
             <View style={styles.card}>
               <ImageBackground source={iconContainerImage} style={styles.iconContainer}>
                 <Image source={landImage} style={styles.cardIcon} />
