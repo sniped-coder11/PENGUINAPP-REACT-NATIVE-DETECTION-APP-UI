@@ -59,6 +59,10 @@ const GalleryPermissionScreen = ({ navigation }) => {
     }
   };
 
+  const handleProceed = () => {
+    navigation.navigate('VideoScreen');
+  };
+
   return (
     <View style={styles.container}>
       {/* Background color (optional) */}
@@ -76,6 +80,11 @@ const GalleryPermissionScreen = ({ navigation }) => {
           <Text style={styles.photoGridButtonText}>View in PhotoGrid</Text>
         </TouchableOpacity>
       )}
+
+      <TouchableOpacity style={styles.proceedButton} onPress={handleProceed}>
+        <Text style={styles.proceedText}>Proceed</Text>
+      </TouchableOpacity>
+
 
       {/* Custom Bottom Navigation */}
       <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
@@ -100,6 +109,28 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  proceedButton: {
+    backgroundColor: '#4CAF50', // Example blue color
+    paddingHorizontal: 20, // Add horizontal padding
+    paddingVertical: 10, // Add vertical padding
+    borderRadius: 8, // Set rounded corners
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    justifyContent:'center',
+    alignItems:'center',
+    position: 'absolute', // Make the button absolute
+    bottom: 130, // Adjust button position from the bottom
+    left: 20, // Adjust button position from the left (optional)
+    right: 20, //// Add a slight shadow effect (optional)
+  },
+  proceedText: {
+    color: '#fff', // Text color for the button
+    fontSize: 16, // Font size for the button text
+    fontWeight: 'bold', // Make the text bold (optional)
+  },
+
   galleryCard: {
     borderRadius: 60, // Adjust for semicircle shape
     padding: 20,

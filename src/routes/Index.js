@@ -10,10 +10,7 @@ import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
 import OpenCamera from '../screens/OpenCamera';
 import VideoScreen from '../screens/VideoScreen';
-
-//import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
-
-
+//import SplashScreenComponent from '../components/SplashScreenComponent';
 
 const Stack = createNativeStackNavigator();
 
