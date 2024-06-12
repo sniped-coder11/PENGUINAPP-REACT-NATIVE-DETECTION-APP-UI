@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity,
-    Animated,
-  } from 'react-native';
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { Camera, useCameraPermissions } from 'expo-camera';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import CustomBottomNavigation from '../components/CustomNavigationBar';
@@ -28,15 +27,13 @@ const SimpleQRScanner = ({ navigation }) => {
     { name: 'Camera', image: cameraImg },
     { name: 'Library', image: photoLibImg },
   ];
-  
+
   const handleQrCodeScan = async () => {
     try {
       const data = await cameraRef.current.barcodeScanAsync();
       const { data: qrData } = data; // Assuming QR code is the first element
       setScannedData(qrData);
       console.log('QR code data:', qrData);
-
-      // Handle scanned data (optional)
     } catch (err) {
       console.error('QR code scanning error:', err);
     }
@@ -50,13 +47,12 @@ const SimpleQRScanner = ({ navigation }) => {
 
   const handleOpenCamera = async () => {
     const { status } = await requestPermission();
-  
+
     if (status === 'granted') {
       // Camera permission granted, open camera
-      console.log('Camera permission granted.');
+
     } else if (status === 'undefined') {
       console.log('Camera permission request is in progress.');
-      // You can add a loading indicator here while waiting for permission
     } else {
       // Handle permission denial (optional)
       console.warn('Camera permission denied.');
@@ -69,26 +65,28 @@ const SimpleQRScanner = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {cameraRef.current ? (
+      {cameraRef.current && (
         <Camera
           ref={cameraRef}
           style={StyleSheet.absoluteFillObject}
           onBarCodeScanned={handleQrCodeScan}
-          barCodeTypes={[Camera.Constants.BarCodeType.QR_CODE]} // Specify QR code type
-        />
-      ) : (
-        <Text>Opening camera...</Text> // Placeholder while camera initializes
+          barCodeTypes={[Camera.Constants.BarCodeType.QR_CODE]}
+          {...(hasPermission === 'granted' && { onStart: cameraRef.current.startCamera })} 
+        /> // Placeholder while camera initializes
       )}
 
-            <TouchableOpacity style={styles.openCameraButton} onPress={handleOpenCamera}>
-                <Text style={styles.openCameraButtonText}>Open Camera</Text>
-            </TouchableOpacity>
+      <TouchableOpacity style={styles.openCameraButton} onPress={handleOpenCamera}>
+        <Text style={styles.openCameraButtonText}>Open Camera To Scan</Text>
+      </TouchableOpacity>
 
+      {/* (Optional) Display scanned data if available */}
+      {scannedData && <Text>Scanned QR Code: {scannedData}</Text>}
+      
       <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
-
       <TouchableOpacity style={styles.goBackButton}>
         <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
       </TouchableOpacity>
+
     </View>
   );
 };
@@ -96,6 +94,26 @@ const SimpleQRScanner = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  openCameraButton: {
+    backgroundColor: '#ddd',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    position: 'absolute',
+    bottom: 340, // Adjust button position as needed
+    left: 86, // Adjust button position as needed
+  },
+  openCameraButtonText: {
+    fontSize: 16,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover', // Adjust as needed
   },
   contentContainer: {
     flex: 1,
@@ -113,18 +131,6 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: 'center',
     position: 'relative', // Needed for line animation to work within
-  },
-  openCameraButton: {
-    backgroundColor: '#ddd',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    position: 'absolute',
-    bottom: 340, // Adjust button position as needed
-    left: 120, // Adjust button position as needed
-  },
-  openCameraButtonText: {
-    fontSize: 16,
   },
   scanText: {
     color: 'black', // Adjust color as needed
