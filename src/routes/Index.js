@@ -9,9 +9,8 @@ import PartnerQRScanner from '../screens/PartnerScannerQR';
 //import CustomerQRScanner from '../screens/CustomerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
+//import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
 //import SimpleQRScanner from '../screens/SimpleQRScanner';
-import OpenCameraScreen from '../screens/OpenCameraScreen';
-import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
 
 
 const Stack = createNativeStackNavigator();
@@ -61,24 +60,10 @@ const Routes = () => {
         />
         {/* Insert CustomerQRScanner screen here for proper navigation flow */}
       <Stack.Screen
-        name="OpenCameraScreen" // Clear name for QR scanning functionality
-        component={OpenCameraScreen}
-        options={{
-          headerTitle: '', // Set clear header title for user context
-        }}
-      />
-      <Stack.Screen
         name="GalleryScreen"
         component={GalleryPermissionScreen}
         options={{
           headerTitle: '', // Set clear header title for user context
-        }}
-      />
-      <Stack.Screen
-        name="Video" // New screen for video playback
-        component={VideoScreen} // Use your imported VideoScreen component
-        options={{
-          headerTitle: '', // Set clear header title if desired
         }}
       />
       </Stack.Navigator>

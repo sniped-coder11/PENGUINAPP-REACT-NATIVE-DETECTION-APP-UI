@@ -7,12 +7,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
+//const videoSource = require('./path/to/your/video.mp4');
 const VideoScreen = ({ videoSource }) => {
   const videoRef = useRef(null);
   const [status, setStatus] = useState({});
   
 
-  const videoSource = require('./path/to/your/video.mp4');
+  
 
   const homeImg = require('../assets/images/home.png');
   const galleryImg = require('../assets/images/galleryIcon.png');

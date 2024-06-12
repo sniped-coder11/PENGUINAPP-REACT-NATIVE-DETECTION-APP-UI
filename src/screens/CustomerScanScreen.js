@@ -59,7 +59,7 @@ const CustomerScreen = ({ navigation }) => {
   <CardContainer
     title="Use Camera To Scan"
     image={cameraIcon}
-    onPress={() => navigation.navigate("OpenCameraScreen")}
+    onPress={() => navigation.navigate("GalleryScreen")}
   />
   <CardContainer
     title="Choose From Gallery"
