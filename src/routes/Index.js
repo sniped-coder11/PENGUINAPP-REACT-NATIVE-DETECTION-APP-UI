@@ -6,11 +6,12 @@ import HomeScreen from '../screens/HomeScreen';
 import PartnerScreen from '../screens/PartnerScanScreen';
 import CustomerScreen from '../screens/CustomerScanScreen';
 import PartnerQRScanner from '../screens/PartnerScannerQR'; 
-import CustomerQRScanner from '../screens/CustomerScannerQR';
+//import CustomerQRScanner from '../screens/CustomerScannerQR';
 import GalleryPermissionScreen from '../screens/GalleryPermissionScreen';
 import ScanTypeScreen from '../screens/ScanTypePartner';
-import SimpleQRScanner from '../screens/SimpleQRScanner';
+//import SimpleQRScanner from '../screens/SimpleQRScanner';
 import OpenCameraScreen from '../screens/OpenCameraScreen';
+import VideoScreen from '../screens/VideoScreen'; // Import your VideoScreen component
 
 
 const Stack = createNativeStackNavigator();
@@ -71,6 +72,13 @@ const Routes = () => {
         component={GalleryPermissionScreen}
         options={{
           headerTitle: '', // Set clear header title for user context
+        }}
+      />
+      <Stack.Screen
+        name="Video" // New screen for video playback
+        component={VideoScreen} // Use your imported VideoScreen component
+        options={{
+          headerTitle: '', // Set clear header title if desired
         }}
       />
       </Stack.Navigator>
