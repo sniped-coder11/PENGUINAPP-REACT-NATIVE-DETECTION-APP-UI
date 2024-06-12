@@ -1,8 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import CustomBottomNavigation from '../components/CustomNavigationBar';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const OpenCamera = () => {
+const Tab = createBottomTabNavigator();
+
+
+const OpenCamera = ({ navigation }) => {
+  const homeImg = require('../assets/images/home.png');
+  const galleryImg = require('../assets/images/galleryIcon.png');
+  const cameraImg = require('../assets/images/cameraIcon.png');
+  const photoLibImg = require('../assets/images/scannedImg.png'); 
+  const tabBarData = [ 
+    { name: 'Home', image: homeImg },
+    { name: 'Gallery', image: galleryImg },
+    { name: 'Camera', image: cameraImg },
+    { name: 'Library', image: photoLibImg },
+  ];
+
+
   const [imgUrl, setImgUrl] = useState(null); // Initialize imgUrl to null
 
   const openCamera = async () => {
@@ -28,15 +46,30 @@ const OpenCamera = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={imgUrl ? { uri: imgUrl } : require('../assets/images/backgroundImg.png')} // Display captured image or placeholder
-        resizeMode="contain"
-        style={styles.img}
-      />
+      {/* Background color */}
+      <View style={styles.background}>
+        {/* Empty view to maintain space */}
+      </View>
 
-      <TouchableOpacity style={styles.btnCamera} onPress={openCamera}>
-        <Text style={styles.textBtn}>Open Camera To Scan</Text>
-      </TouchableOpacity>
+      <View style={styles.content}>
+        <Image
+          source={imgUrl ? { uri: imgUrl } : require('../assets/images/backgroundImg.png')} // Display captured image or placeholder
+          resizeMode="contain"
+          style={styles.img}
+        />
+
+        <TouchableOpacity style={styles.btnCamera} onPress={openCamera}>
+          <Text style={styles.textBtn}>Open Camera To Scan</Text>
+        </TouchableOpacity>
+      </View>
+
+      <TouchableOpacity style={styles.goBackButton}>
+            <MaterialCommunityIcons name="chevron-left" size={32} color="black" />
+        </TouchableOpacity>
+
+      {/* Custom Bottom Navigation */}
+      <CustomBottomNavigation navigation={navigation} tabBarData={tabBarData} />
+
     </View>
   );
 };
@@ -44,27 +77,40 @@ const OpenCamera = () => {
 export default OpenCamera;
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center',
-    },
-    img:{
-        width:'90%',
-        height:300,
-        alignSelf:'center',
-        borderRadius:6,                                          
-    },
-    btnCamera:{
-        alignSelf:'center',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius: 6,
-        width:100,
-        height:40,
-        backgroundColor:'green'
-    },
-    textBtn:{
-        color:'#fff',
-    },
+  container: {
+    flex: 1,
+  },
+  background: {
+    flex: 1, // Occupy full height
+    backgroundColor: '#112D63', // Example background color
+  },
+  content: {
+    position: 'absolute', // Position content absolutely
+    top: 0, // Start at top
+    left: 0, // Start at left
+    right: 0, // Fill entire width
+    bottom: 0, // Fill entire height
+    justifyContent: 'center', // Center content vertically
+    alignItems: 'center', // Center content horizontally
+  },
+  img: {
+    width: '90%',
+    height: 240,
+    alignSelf: 'center',
+    borderRadius: 6,
+  },
+  btnCamera: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 6,
+    width: 180,
+    height: 60,
+    marginTop:20,
+    backgroundColor: 'green',
+  },
+  textBtn: {
+    color: '#fff',
+
+  },
 });
