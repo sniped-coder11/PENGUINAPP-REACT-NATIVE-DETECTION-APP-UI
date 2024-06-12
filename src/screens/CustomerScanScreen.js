@@ -12,6 +12,7 @@ import CardContainer from '../components/Card-Container'; // Import CardContaine
 import CustomBottomNavigation from '../components/CustomNavigationBar';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+const Tab = createBottomTabNavigator(); 
 
 const CustomerScreen = ({ navigation }) => {
   const backgroundImage = require("../assets/images/backgroundImg.png");
@@ -58,7 +59,7 @@ const CustomerScreen = ({ navigation }) => {
   <CardContainer
     title="Use Camera To Scan"
     image={cameraIcon}
-    onPress={() => navigation.navigate("SimpleQRScanner")}
+    onPress={() => navigation.navigate("OpenCameraScreen")}
   />
   <CardContainer
     title="Choose From Gallery"
