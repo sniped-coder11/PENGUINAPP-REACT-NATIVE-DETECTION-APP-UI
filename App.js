@@ -1,13 +1,15 @@
 import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from './src/routes/Index'; // Import your navigation routes
-//import SplashScreenComponent from './src/components/SplashScreenComponent'; // Import your splash screen component
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Routes />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 
