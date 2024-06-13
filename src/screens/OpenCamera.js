@@ -17,7 +17,7 @@ const OpenCamera = ({ navigation }) => {
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
 
 
@@ -45,7 +45,7 @@ const OpenCamera = ({ navigation }) => {
   };
 
   const handleProceed = () => {
-      navigation.navigate('VideoScreen');
+      navigation.navigate('Video');
   };
 
   return (

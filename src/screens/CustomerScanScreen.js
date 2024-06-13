@@ -24,7 +24,7 @@ const CustomerScreen = ({ navigation }) => {
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryIcon },
     { name: 'Camera', image: cameraIcon },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
 
   const cardOptions = [
@@ -43,30 +43,19 @@ const CustomerScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
-        {  }
-        {/* <View style={styles.cardsContainer}>
-          {cardOptions.map((option, index) => (
-            <Card
-              key={index}
-              title={option.title}
-              icon={<Image source={option.icon} style={styles.cardIcon} />} // Render icon image
-              onPress={option.onPress}
-            />
-          ))}
-        </View> */}
 
-<View style={styles.cardContainerWrapper}>
-  <CardContainer
-    title="Use Camera To Scan"
-    image={cameraIcon}
-    onPress={() => navigation.navigate("OpenCamera")}
-  />
-  <CardContainer
-    title="Choose From Gallery"
-    image={galleryIcon}
-    onPress={() => navigation.navigate("GalleryScreen")}
-  />
-</View>
+    <View style={styles.cardContainerWrapper}>
+      <CardContainer
+          title="Use Camera To Scan"
+          image={cameraIcon}
+          onPress={() => navigation.navigate("Camera")}
+      />
+        <CardContainer
+            title="Choose From Gallery"
+            image={galleryIcon}
+            onPress={() => navigation.navigate("Gallery")}
+          />
+        </View>
 
 
         {/* Custom Bottom Navigation */}

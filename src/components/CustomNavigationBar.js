@@ -2,7 +2,14 @@ import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 
 const CustomBottomNavigation = ({ navigation, tabBarData }) => {
-  const handlePress = (screenName) => navigation.navigate(screenName);
+  const handlePress = (screenName) => {
+    // Ensure valid screen name before navigation
+    if (tabBarData.some((item) => item.name === screenName)) {
+      navigation.navigate(screenName);
+    } else {
+      console.warn(`Screen name "${screenName}" not found in tabBarData`);
+    }
+  };
 
   return (
     <View style={styles.container}>

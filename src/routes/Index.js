@@ -18,7 +18,7 @@ const Routes = () => {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          name="Home_Screen" // Descriptive name for Home screen
+          name="Home" // Descriptive name for Home screen
           component={HomeScreen}
           options={{
             headerTitle: '', 
@@ -29,7 +29,7 @@ const Routes = () => {
         />
         {/* Add more screens here if needed */}
         <Stack.Screen
-          name="PartnerScan" // Clear name for PartnerScan functionality
+          name="Partner" // Clear name for PartnerScan functionality
           component={PartnerScreen}
           options={{
             headerTitle: '', // Optional: Set header title
@@ -37,7 +37,7 @@ const Routes = () => {
         />
         {/* Insert PartnerScannerQR screen here for proper navigation flow */}
       <Stack.Screen
-        name="PartnerQRScanner"
+        name="PartnerQR"
         component={PartnerQRScanner}
         options={{
           headerTitle: '', // Set clear header title for user context
@@ -59,21 +59,21 @@ const Routes = () => {
         />
         {/* Insert CustomerQRScanner screen here for proper navigation flow */}
       <Stack.Screen
-        name="GalleryScreen"
+        name="Gallery"
         component={GalleryPermissionScreen}
         options={{
           headerTitle: '', // Set clear header title for user context
         }}
       />
       <Stack.Screen
-        name="OpenCamera"
+        name="Camera"
         component={OpenCamera}
         options={{
           headerTitle: '', // Set clear header title for user context
         }}
       />
       <Stack.Screen
-        name="VideoScreen"
+        name="Video"
         component={VideoScreen}
         options={{
           headerTitle: '', // Set clear header title for user context

@@ -21,7 +21,7 @@ const VideoScreen = ({ navigation, videoSource = require("../assets/videos/final
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
 
   return (

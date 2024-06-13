@@ -18,11 +18,11 @@ const HomeScreen = ({ navigation }) => {
   const galleryImg = require('../assets/images/galleryIcon.png');
   const cameraImg = require('../assets/images/cameraIcon.png');
   const photoLibImg = require('../assets/images/scannedImg.png'); 
-  const tabBarData = [ // Sample tab bar data
+  const tabBarData = [
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
   
   //const [fontsLoaded] = useFonts({
@@ -41,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
         {/* Cards container with vertical centering */}
         <View style={[styles.cardsContainer, { justifyContent: 'center' }]}>
           {/* Partner Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('PartnerScan')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Partner')}>
             <View style={styles.card}>
               <ImageBackground source={iconContainerImage} style={styles.iconContainer}>
                 <Image source={partnerImage} style={styles.cardIcon} />

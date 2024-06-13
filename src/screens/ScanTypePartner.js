@@ -20,7 +20,7 @@ const ScanTypeScreen = ({ navigation }) => {
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
   
   //const [fontsLoaded] = useFonts({
@@ -39,7 +39,7 @@ const ScanTypeScreen = ({ navigation }) => {
         {/* Cards container with vertical centering */}
         <View style={[styles.cardsContainer, { justifyContent: 'center' }]}>
           {/* Partner Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('OpenCamera')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
             <View style={styles.card}>
               <ImageBackground source={iconContainerImage} style={styles.iconContainer}>
                 <Image source={vehicleImage} style={styles.cardIcon} />
@@ -49,7 +49,7 @@ const ScanTypeScreen = ({ navigation }) => {
           </TouchableOpacity>
 
           {/* Customer Card */}
-          <TouchableOpacity onPress={() => navigation.navigate('OpenCamera')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
             <View style={styles.card}>
               <ImageBackground source={iconContainerImage} style={styles.iconContainer}>
                 <Image source={landImage} style={styles.cardIcon} />

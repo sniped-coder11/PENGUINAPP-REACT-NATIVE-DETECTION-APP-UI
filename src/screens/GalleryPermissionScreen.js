@@ -19,7 +19,7 @@ const GalleryPermissionScreen = ({ navigation }) => {
     { name: 'Home', image: homeImg },
     { name: 'Gallery', image: galleryImg },
     { name: 'Camera', image: cameraImg },
-    { name: 'Library', image: photoLibImg },
+    { name: 'Video', image: photoLibImg },
   ];
 
   const requestCameraRollPermission = async () => {
@@ -60,7 +60,7 @@ const GalleryPermissionScreen = ({ navigation }) => {
   };
 
   const handleProceed = () => {
-    navigation.navigate('VideoScreen');
+    navigation.navigate('Video');
   };
 
   return (
