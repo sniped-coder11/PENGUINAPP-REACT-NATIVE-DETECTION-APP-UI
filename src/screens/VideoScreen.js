@@ -9,7 +9,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 
-const VideoScreen = ({ navigation, videoSource = require("../assets/videos/finalvideo.mp4") }) => {
+const VideoScreen = ({ navigation, videoSource = require("../assets/videos/finalvideoedit.mp4") }) => {
   const video = React.useRef(null);
   const [status, setStatus] = useState({});
   
